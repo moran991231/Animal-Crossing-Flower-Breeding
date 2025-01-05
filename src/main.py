@@ -4,8 +4,8 @@ def main():
 
     init_flower_color_tb()
 
-    f1 = Flower(FlowerType.LILY, 2,0,1)
-    f2 = Flower(FlowerType.LILY, 0,0,2)
+    f1 = Flower(FlowerType.ROSE, 1,1,1,1)
+    f2 = Flower(FlowerType.ROSE, 1,1,1,1)
     
     breed(f1, f2)
     pass

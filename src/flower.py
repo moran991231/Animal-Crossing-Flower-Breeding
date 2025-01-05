@@ -5,7 +5,7 @@ from enum import Enum
 
 
 
-BREED_TB = {
+MENDELS_LAW = {
     (0, 0) : [4, 0, 0],
     (0, 1) : [2, 2, 0],
     (0, 2) : [0, 4, 0],
@@ -23,7 +23,7 @@ class FlowerType(Enum):
     HYASINTHS = 2
     ANEMONE = 3
     FANJI = 4
-    CHRYSANTHEMUM = 5
+    MUM = 5
     COSMOS = 6
     LILY = 7
 
@@ -59,10 +59,10 @@ def print_gene_result(gene_result:dict):
             print("")
 
 def breed(f1:Flower, f2:Flower):
-    R = BREED_TB[(f1.R, f2.R)]
-    Y = BREED_TB[(f1.Y, f2.Y)]
-    W = BREED_TB[(f1.W, f2.W)]
-    S = BREED_TB[(f1.S, f2.S)]
+    R = MENDELS_LAW[(f1.R, f2.R)]
+    Y = MENDELS_LAW[(f1.Y, f2.Y)]
+    W = MENDELS_LAW[(f1.W, f2.W)]
+    S = MENDELS_LAW[(f1.S, f2.S)]
 
     gene_result ={}
     color_gene_count = [0 for _ in range(len(Color))]
@@ -80,9 +80,26 @@ def breed(f1:Flower, f2:Flower):
                     gene_result[(r, y, w)] = temp
                     if(temp != 0) : 
                         color = int(get_flower_color(r,y,w))
+                        if(color == int(Color.ERROR)):
+                            print(f"\n error color: {(r,y,w)}\n")
                         color_gene_count[color] += temp
                         color_result[color] += 1
     else: # n==4
+        
+        for r in range(3):
+            for y in range(3):
+                for w in range(3):
+                    for s in range(3):
+
+                        temp = R[r] * Y[y] * W[w] * S[s]
+                        gene_result[(r, y, w, s)] = temp
+                        if(temp != 0) : 
+                            color = int(get_flower_color(r,y,w,s))
+                        if(color == int(Color.ERROR)):
+                            print(f"\n error color: {(r,y,w,s)}\n")
+                            color_gene_count[color] += temp
+                            color_result[color] += 1
+        
         pass
     
     print(f"{f1.flower_type} breeding result of {get_flower_color(f1.R, f1.Y, f1.W, f1.S)}{f1} X {f2}{get_flower_color(f2.R, f2.Y, f2.W, f2.S)}")
